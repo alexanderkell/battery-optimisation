@@ -9,10 +9,10 @@ The project's aim is to use reinforcement learning to dispatch a battery source 
 Important features?
 -------------------
 
-#. Weather
-#. Historical load
-#. Historical weather irradiance
-#. Generator capacity
+- Weather
+- Historical load
+- Historical weather irradiance
+- Generator capacity
 
 
 
