@@ -5,7 +5,7 @@ import pandas as pd
 from pathlib import Path
 
 
-def main(input_filepath, output_filepath):
+def main(input_filepath, output_filepath, number_of_households):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -28,15 +28,15 @@ def main(input_filepath, output_filepath):
     data['Consumption Category'] = data['Consumption Category'].replace({"CL":"controlled_load_consumption", "GC": "general_electricity_consumption", "GG": "solar_generation"})
 
     logger.info('saving to csv')
-    data.to_csv(output_filepath)
+    data[data.Customer < number_of_households].to_csv(output_filepath)
 
 
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
-
+    number_of_households = 10
     project_dir = Path(__file__).resolve().parents[2]
     input_filepath = "{}/data/raw/Solar home half-hour data - 1 July 2012 to 30 June 2013/2012-2013 Solar home electricity data v2.csv".format(project_dir)
     output_filepath = "{}/data/processed/2012-2013-solar-electricity-data.csv".format(project_dir)
-    main(input_filepath, output_filepath)
+    main(input_filepath, output_filepath, number_of_households)
