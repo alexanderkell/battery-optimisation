@@ -1,7 +1,9 @@
 battery_optimisation
 ==============================
 
-Optimising batteries usage
+This project looks at the optimisation of domestic batteries with domestic solar photovoltaics attached.
+
+The project's aim is to use reinforcement learning to dispatch a battery source optimally.s
 
 Project Organization
 ------------

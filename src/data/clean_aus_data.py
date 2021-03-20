@@ -36,7 +36,6 @@ if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
-    # not used in this stub but often useful for finding various files
     project_dir = Path(__file__).resolve().parents[2]
     input_filepath = "{}/data/raw/Solar home half-hour data - 1 July 2012 to 30 June 2013/2012-2013 Solar home electricity data v2.csv".format(project_dir)
     output_filepath = "{}/data/processed/2012-2013-solar-electricity-data.csv".format(project_dir)
