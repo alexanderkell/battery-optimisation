@@ -1,5 +1,8 @@
-# local package
--e .
+# required for project
+"ray[rllib]"
+pandas
+seaborn
+matplotlib
 
 # external requirements
 click
