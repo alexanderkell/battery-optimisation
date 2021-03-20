@@ -5,6 +5,17 @@ This project looks at the optimisation of domestic batteries with domestic solar
 
 The project's aim is to use reinforcement learning to dispatch a battery source optimally.s
 
+
+Important features?
+-------------------
+
+#. Weather
+#. Historical load
+#. Historical weather irradiance
+#. Generator capacity
+
+
+
 Project Organization
 ------------
 
