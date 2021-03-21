@@ -15,5 +15,7 @@ def test_charge_battery(model):
     assert model.current_charge == 5
     model.use_battery(-10)
     assert model.current_charge == 0
+    model.use_battery(model.battery_size + 500)
+    assert model.current_charge == model.battery_size
 
 
