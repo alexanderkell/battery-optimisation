@@ -4,6 +4,7 @@ pandas
 seaborn
 matplotlib
 pytest
+pytest-cov
 
 # external requirements
 click
