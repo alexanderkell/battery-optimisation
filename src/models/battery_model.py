@@ -99,6 +99,7 @@ class HouseSystem:
         current_general_electricity_consumption = self.general_electricity_consumption[
             self.general_electricity_consumption.datetime == self.datetime]
 
+        #TODO integrate solar
         residual_battery_energy = self.battery.use_battery(charge_action)
 
         residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = self.service_electricity_load(
@@ -112,8 +113,12 @@ class HouseSystem:
         done = True if self.datetime == datetime(
             2013, 12, 6, 23, 30) else False
 
-        observations = [self.battery.battery_size, self.battery.current_charge,
-                        residual_general_electricity_consumption, residual_controlled_load_consumption]
+        observations = [
+            self.battery.battery_size,
+            self.battery.current_charge,
+            residual_general_electricity_consumption,
+            residual_controlled_load_consumption
+        ]
 
         return observations, reward, done
 
