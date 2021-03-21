@@ -64,3 +64,8 @@ def test_house_system_factory(house_system_list):
     assert house_system.general_electricity_consumption[
         'Consumption Category'].iloc[0] == 'general_electricity_consumption'
     assert house_system.solar_generation['Consumption Category'].iloc[0] == 'solar_generation'
+
+
+def test_house_system_step(house_system_list):
+    house_system = house_system_list[0]
+    print(house_system)
