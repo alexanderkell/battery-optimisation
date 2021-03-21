@@ -138,6 +138,16 @@ def test_service_electricity_load(house_system_list):
     assert residual_general_electricity_consumption == 15
     assert residual_battery_energy == 0
 
+    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+        remaining_battery_energy=40,
+        current_controlled_load_consumption=30,
+        current_general_electricity_consumption=30
+    )
+
+    assert residual_controlled_load_consumption == 0
+    assert residual_general_electricity_consumption == 20
+    assert residual_battery_energy == 0
+
 
 
 def test_house_system_step(house_system_list):
