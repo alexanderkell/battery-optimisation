@@ -36,6 +36,7 @@ def house_system_list():
     consumption_data_path = "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(
         project_dir)
 
+
     consumption_data = pd.read_csv(
         consumption_data_path,
         nrows=20000
@@ -53,4 +54,3 @@ def test_house_system_factory(house_system_list):
     assert house_system.customer_number == 1
     assert house_system.generator_capacity == 3.78
     assert house_system.postcode == 2076
-    

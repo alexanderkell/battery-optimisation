@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 import pandas as pd
 
-def main(input_filepath, output_filepath, lagged_list):
+def main(input_filepath, output_filepath, lagged_list, number_of_customers):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -26,7 +26,7 @@ def main(input_filepath, output_filepath, lagged_list):
     
     lagged_data = lagged_data.dropna()
     logger.info('saving CSV')
-    lagged_data.to_csv(output_filepath)
+    lagged_data[lagged_data.Customer < number_of_customers].to_csv(output_filepath)
 
 
 if __name__ == '__main__':
@@ -34,8 +34,8 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
     lagged_list = list(range(10)) + list(range(15,31)) + list(range(42,50))  # selected due to autocorrelation plot
-
+    number_of_customers = 5
     project_dir = Path(__file__).resolve().parents[2]
     input_filepath = "{}/data/processed/2012-2013-solar-electricity-data.csv".format(project_dir)
     output_filepath = "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(project_dir)
-    main(input_filepath, output_filepath, lagged_list)
+    main(input_filepath, output_filepath, lagged_list, number_of_customers)
