@@ -1,5 +1,5 @@
 # required for project
-"ray[rllib]"
+ray[rllib]
 pandas
 seaborn
 matplotlib
