@@ -24,9 +24,13 @@ class Battery:
     def discharge(discharge_size):
         if self.current_charge >= discharge_size:
             self.current_charge -= discharge_size
-            return True
+            return discharge_size
+        elif self.current_charge < discharge_size:
+            residual_energy = discharge_size - self.current_charge
+            self.current_charge = 0
+            return residual_energy
         else:
-            return 90000
+            return 0
 
     def is_battery_full():
         if self.current_charge == self.battery_size:
@@ -58,7 +62,15 @@ class HouseSystem:
         current_controlled_load_consumption = self.controlled_load_consumption[self.controlled_load_consumption.datetime == self.datetime]
         current_general_electricity_consumption = self.general_electricity_consumption[self.general_electricity_consumption.datetime == self.datetime]
 
-        self.battery.use_battery(charge_action)
+        residual_battery_energy = self.battery.use_battery(charge_action)
+
+        if residual_battery_energy > 0:    
+            if current_controlled_load_consumption > 0:
+                current_controlled_load_consumption = current_controlled_load_consumption - residual_battery_energy
+            if current_general_electricity_consumption > 0:
+                current_general_electricity_consumption = current_general_electricity_consumption - residual_battery_energy
+
+
 
     def electricity_cost(general_electricity_consumption, controlled_load_consumption)
         general_consumption_cost = self.single_rate_tariff * general_electricity_consumption

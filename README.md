@@ -15,6 +15,20 @@ Important features?
 - Generator capacity
 
 
+Reward
+------
+
+- Inversed price of electricity 
+
+Observations
+------------
+
+- State of battery charge
+- Battery size
+- Previous data points
+
+
+
 
 Project Organization
 ------------
