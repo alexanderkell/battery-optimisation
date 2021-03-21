@@ -68,4 +68,4 @@ def test_house_system_factory(house_system_list):
 
 def test_house_system_step(house_system_list):
     house_system = house_system_list[0]
-    print(house_system)
+    
