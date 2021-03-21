@@ -3,6 +3,7 @@
 pandas
 seaborn
 matplotlib
+pyest
 
 # external requirements
 click
