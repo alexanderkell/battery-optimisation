@@ -8,9 +8,11 @@ class Battery:
 
     def use_battery(self, energy):
         if energy > 0:
-            self.charge(energy)
+            residual = self.charge(energy)
+            return residual
         elif energy < 0:
-            self.discharge(energy)
+            residual = self.discharge(energy)
+            return residual
 
     def charge(self, charge_size):
         if self.current_charge + charge_size < self.battery_size:
@@ -24,11 +26,11 @@ class Battery:
     def discharge(self, discharge_size):
         if self.current_charge >= - discharge_size:
             self.current_charge += discharge_size
-            return discharge_size
+            return - discharge_size
         elif self.current_charge < - discharge_size:
             residual_energy = self.current_charge + discharge_size
             self.current_charge = 0
-            return residual_energy
+            return - residual_energy
         else:
             return 0
 
