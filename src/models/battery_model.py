@@ -23,10 +23,10 @@ class Battery:
     
     def discharge(self, discharge_size):
         if self.current_charge >= discharge_size:
-            self.current_charge -= discharge_size
+            self.current_charge += discharge_size
             return discharge_size
         elif self.current_charge < discharge_size:
-            residual_energy = discharge_size - self.current_charge
+            residual_energy = discharge_size + self.current_charge
             self.current_charge = 0
             return residual_energy
         else:
