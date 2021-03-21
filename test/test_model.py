@@ -2,6 +2,7 @@ from pytest import fixture
 import pandas as pd
 from pathlib import Path
 
+
 @fixture
 def model():
     from src.models.battery_model import Battery
@@ -36,10 +37,8 @@ def house_system_list():
     consumption_data_path = "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(
         project_dir)
 
-
     consumption_data = pd.read_csv(
         consumption_data_path,
-        nrows=20000
     )
 
     factory = HouseSystemFactory(battery_size=5000)
@@ -54,3 +53,14 @@ def test_house_system_factory(house_system_list):
     assert house_system.customer_number == 1
     assert house_system.generator_capacity == 3.78
     assert house_system.postcode == 2076
+
+    house_system = house_system_list[-1]
+    assert house_system.customer_number == 4
+    assert house_system.generator_capacity == 1.00
+    assert house_system.postcode == 2220
+
+    assert house_system.controlled_load_consumption[
+        'Consumption Category'].iloc[0] == 'controlled_load_consumption'
+    assert house_system.general_electricity_consumption[
+        'Consumption Category'].iloc[0] == 'general_electricity_consumption'
+    assert house_system.solar_generation['Consumption Category'].iloc[0] == 'solar_generation'
