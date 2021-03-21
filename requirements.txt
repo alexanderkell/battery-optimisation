@@ -5,7 +5,7 @@ seaborn
 matplotlib
 pytest
 pytest-cov
-numpy 
+numpy >= 1.16.5
 
 # external requirements
 click

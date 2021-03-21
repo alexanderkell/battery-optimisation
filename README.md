@@ -1,3 +1,5 @@
+https://travis-ci.org/alexanderkell/battery-optimisation.svg?branch=main
+
 battery_optimisation
 ==============================
 
