@@ -140,7 +140,7 @@ class HouseSystem:
                 else:
                     residual_general_electricity_consumption = 0
                     residual_battery_energy -= current_general_electricity_consumption
-                # residual_battery_energy -= residual_general_electricity_consumption
+
         return residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy
 
     def electricity_cost(self, general_electricity_consumption, controlled_load_consumption):

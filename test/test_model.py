@@ -148,6 +148,23 @@ def test_service_electricity_load(house_system_list):
     assert residual_general_electricity_consumption == 20
     assert residual_battery_energy == 0
 
+def test_electricity_cost(house_system_list):
+    house_system = house_system_list[0]
+    step_cost = house_system.electricity_cost(
+        general_electricity_consumption=1,
+        controlled_load_consumption=1
+    )
+
+    assert step_cost==37
+
+    step_cost = house_system.electricity_cost(
+        general_electricity_consumption=10,
+        controlled_load_consumption=10
+    )
+
+    assert step_cost==370
+
+
 
 
 def test_house_system_step(house_system_list):
