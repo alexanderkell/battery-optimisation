@@ -7,3 +7,7 @@ install:
 # command to run tests
 script:
   - pytest
+
+script: "sbt clean coverage test"
+
+after_success: "sbt coveralls"
