@@ -3,7 +3,7 @@ ray[rllib]
 pandas
 seaborn
 matplotlib
-pyest
+pytest
 
 # external requirements
 click
