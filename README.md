@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/alexanderkell/battery-optimisation.svg?branch=main)](https://travis-ci.org/alexanderkell/battery-optimisation)
+[![Build Status](https://travis-ci.org/alexanderkell/battery-optimisation.svg?branch=main)](https://travis-ci.org/alexanderkell/battery-optimisation)[![Coverage Status](https://coveralls.io/repos/github/alexanderkell/battery-optimisation/badge.svg?branch=main)](https://coveralls.io/github/alexanderkell/battery-optimisation?branch=main)
 
 battery_optimisation
 ==============================
