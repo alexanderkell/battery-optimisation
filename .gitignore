@@ -139,3 +139,8 @@ cython_debug/
 
 # data
 # data/processed/*
+
+.idea/
+.vscode/
+
+.DS_Store

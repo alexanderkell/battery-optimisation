@@ -40,7 +40,7 @@ class Battery:
         if self.current_charge == self.battery_size:
             return True
         else:
-            return 90000
+            return False
 
 
 class HouseSystemFactory():
@@ -99,7 +99,7 @@ class HouseSystem:
         current_general_electricity_consumption = self.general_electricity_consumption[
             self.general_electricity_consumption.datetime == self.datetime]
 
-        #TODO integrate solar
+        # TODO integrate solar
         residual_battery_energy = self.battery.use_battery(charge_action)
 
         residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = self.service_electricity_load(
