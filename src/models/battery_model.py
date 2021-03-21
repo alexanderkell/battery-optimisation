@@ -101,8 +101,10 @@ class HouseSystem:
 
         residual_battery_energy = self.battery.use_battery(charge_action)
 
-        residual_general_electricity_consumption, residual_controlled_load_consumption = self.service_electricity_load(
+        residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = self.service_electricity_load(
             residual_battery_energy, current_controlled_load_consumption, current_general_electricity_consumption)
+
+        self.battery.current_charge += residual_battery_energy
 
         cost = self.electricity_cost(
             residual_general_electricity_consumption, residual_controlled_load_consumption)
@@ -115,17 +117,31 @@ class HouseSystem:
 
         return observations, reward, done
 
-    def service_electricity_load(self, residual_battery_energy, current_controlled_load_consumption, current_general_electricity_consumption):
+    def service_electricity_load(self, remaining_battery_energy, current_controlled_load_consumption, current_general_electricity_consumption):
         residual_controlled_load_consumption = current_controlled_load_consumption
         residual_general_electricity_consumption = current_general_electricity_consumption
+        residual_battery_energy = remaining_battery_energy
+
         if residual_battery_energy > 0:
             if current_controlled_load_consumption > 0:
-                residual_controlled_load_consumption = current_controlled_load_consumption - \
-                    residual_battery_energy
-            if current_general_electricity_consumption > 0:
-                residual_general_electricity_consumption = current_general_electricity_consumption - \
-                    residual_battery_energy
-        return residual_general_electricity_consumption, residual_controlled_load_consumption
+                if residual_battery_energy < current_controlled_load_consumption:
+                    residual_controlled_load_consumption = current_controlled_load_consumption - \
+                        residual_battery_energy
+                else:
+                    residual_controlled_load_consumption = 0
+                    residual_battery_energy = current_controlled_load_consumption
+                    return residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy
+                residual_battery_energy -= residual_controlled_load_consumption
+            if current_general_electricity_consumption > 0 and residual_battery_energy > 0:
+                if residual_battery_energy < current_general_electricity_consumption:
+                    residual_general_electricity_consumption = current_general_electricity_consumption - \
+                        residual_battery_energy
+                else:
+                    residual_general_electricity_consumption = 0
+                    residual_battery_energy = current_general_electricity_consumption
+                residual_battery_energy -= residual_general_electricity_consumption
+                return residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy
+        return residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy
 
     def electricity_cost(self, general_electricity_consumption, controlled_load_consumption):
         general_consumption_cost = self.single_rate_tariff * general_electricity_consumption
