@@ -5,6 +5,7 @@ seaborn
 matplotlib
 pytest
 pytest-cov
+numpy 
 
 # external requirements
 click
