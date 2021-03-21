@@ -85,7 +85,7 @@ class HouseSystem:
         self.solar_generation = solar_generation
         self.controlled_load_consumption = controlled_load_consumption
         self.general_electricity_consumption = general_electricity_consumption
-        self.single_rate_tarrif = single_rate_tariff
+        self.single_rate_tariff = single_rate_tariff
         self.controlled_load_tariff = controlled_load_tariff
         self.datetime = datetime(2012, 1, 8, 0, 30)
 
@@ -116,6 +116,8 @@ class HouseSystem:
         return observations, reward, done
 
     def service_electricity_load(self, residual_battery_energy, current_controlled_load_consumption, current_general_electricity_consumption):
+        residual_controlled_load_consumption = current_controlled_load_consumption
+        residual_general_electricity_consumption = current_general_electricity_consumption
         if residual_battery_energy > 0:
             if current_controlled_load_consumption > 0:
                 residual_controlled_load_consumption = current_controlled_load_consumption - \

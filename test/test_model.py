@@ -66,6 +66,28 @@ def test_house_system_factory(house_system_list):
     assert house_system.solar_generation['Consumption Category'].iloc[0] == 'solar_generation'
 
 
+def test_service_electricity_load(house_system_list):
+    house_system = house_system_list[0]
+    residual_general_electricity_consumption, residual_controlled_load_consumption = house_system.service_electricity_load(
+        residual_battery_energy=10,
+        current_controlled_load_consumption=20,
+        current_general_electricity_consumption=0
+    )
+
+    assert residual_controlled_load_consumption == 10
+    assert residual_general_electricity_consumption == 0 
+
+    residual_general_electricity_consumption, residual_controlled_load_consumption = house_system.service_electricity_load(
+        residual_battery_energy=10,
+        current_controlled_load_consumption=5,
+        current_general_electricity_consumption=0
+    )
+
+    assert residual_controlled_load_consumption == 0
+    assert residual_general_electricity_consumption == 0 
+
+
 def test_house_system_step(house_system_list):
     house_system = house_system_list[0]
-    
+    observations, reward, done = house_system.step(10)
+    assert done is False
