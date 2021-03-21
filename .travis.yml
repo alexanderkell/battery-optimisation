@@ -9,5 +9,5 @@ install:
 # command to run tests
 script:
   - pytest
-
+#run coveralls
 after_success: - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
