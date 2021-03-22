@@ -20,7 +20,7 @@ Important features?
 Reward
 ------
 
-- Inversed price of electricity 
+- Inverse of electricity price 
 
 Observations
 ------------
@@ -28,6 +28,8 @@ Observations
 - State of battery charge
 - Battery size
 - Previous data points
+- Time
+- Day
 
 
 

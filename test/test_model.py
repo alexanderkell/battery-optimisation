@@ -69,7 +69,7 @@ def test_house_system_factory(house_system_list):
 def test_service_electricity_load(house_system_list):
     house_system = house_system_list[0]
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=10,
+        battery_discharge_size=10,
         current_controlled_load_consumption=20,
         current_general_electricity_consumption=0
     )
@@ -79,7 +79,7 @@ def test_service_electricity_load(house_system_list):
     assert residual_battery_energy == 0
 
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=10,
+        battery_discharge_size=10,
         current_controlled_load_consumption=0,
         current_general_electricity_consumption=20
     )
@@ -89,7 +89,7 @@ def test_service_electricity_load(house_system_list):
     assert residual_battery_energy == 0
 
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=10,
+        battery_discharge_size=10,
         current_controlled_load_consumption=5,
         current_general_electricity_consumption=0
     )
@@ -99,7 +99,7 @@ def test_service_electricity_load(house_system_list):
     assert residual_battery_energy == 5
 
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=10,
+        battery_discharge_size=10,
         current_controlled_load_consumption=0,
         current_general_electricity_consumption=5
     )
@@ -109,7 +109,7 @@ def test_service_electricity_load(house_system_list):
     assert residual_battery_energy == 5
 
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=40,
+        battery_discharge_size=40,
         current_controlled_load_consumption=10,
         current_general_electricity_consumption=5
     )
@@ -119,7 +119,7 @@ def test_service_electricity_load(house_system_list):
     assert residual_battery_energy == 25
 
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=40,
+        battery_discharge_size=40,
         current_controlled_load_consumption=55,
         current_general_electricity_consumption=0
     )
@@ -129,7 +129,7 @@ def test_service_electricity_load(house_system_list):
     assert residual_battery_energy == 0
 
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=40,
+        battery_discharge_size=40,
         current_controlled_load_consumption=0,
         current_general_electricity_consumption=55
     )
@@ -139,7 +139,7 @@ def test_service_electricity_load(house_system_list):
     assert residual_battery_energy == 0
 
     residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
-        remaining_battery_energy=40,
+        battery_discharge_size=40,
         current_controlled_load_consumption=30,
         current_general_electricity_consumption=30
     )
@@ -148,6 +148,21 @@ def test_service_electricity_load(house_system_list):
     assert residual_general_electricity_consumption == 20
     assert residual_battery_energy == 0
 
+
+def test_charge_battery_in_house(house_system_list):
+    house_system = house_system_list[0]
+    input_energy, current_general_electricity_consumption = house_system.charge_battery(
+        charge_solar=20,
+        charge_load=30,
+        discharge_size=10,
+        current_solar=200,
+        current_general_electricity_consumption=300
+    )
+
+    assert input_energy == 190
+    assert current_general_electricity_consumption == 330
+
+
 def test_electricity_cost(house_system_list):
     house_system = house_system_list[0]
     step_cost = house_system.electricity_cost(
@@ -155,19 +170,17 @@ def test_electricity_cost(house_system_list):
         controlled_load_consumption=1
     )
 
-    assert step_cost==37
+    assert step_cost == 37
 
     step_cost = house_system.electricity_cost(
         general_electricity_consumption=10,
         controlled_load_consumption=10
     )
 
-    assert step_cost==370
-
-
+    assert step_cost == 370
 
 
 def test_house_system_step(house_system_list):
     house_system = house_system_list[0]
-    observations, reward, done = house_system.step(10)
+    observations, reward, done = house_system.step(10, 20, 30)
     assert done is False

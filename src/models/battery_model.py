@@ -91,22 +91,24 @@ class HouseSystem:
 
         self.time_step = timedelta(minutes=30)
 
-    def step(self, charge_action):
+    def step(self, charge_solar, charge_load, discharge_size):
         self.datetime += self.time_step
-        current_solar = self.solar_generation[self.solar_generation.datetime == self.datetime]
-        current_controlled_load_consumption = self.controlled_load_consumption[
-            self.controlled_load_consumption.datetime == self.datetime]
-        current_general_electricity_consumption = self.general_electricity_consumption[
-            self.general_electricity_consumption.datetime == self.datetime]
+        current_solar = self.solar_generation[self.solar_generation.datetime == str(self.datetime)].consumption.values
+        current_controlled_load_consumption = self.controlled_load_consumption[self.controlled_load_consumption.datetime == str(self.datetime)].consumption.values
+        current_general_electricity_consumption = self.general_electricity_consumption[self.general_electricity_consumption.datetime == str(self.datetime)].consumption.values
+        
+        # charge battery with solar or load
+        input_energy, current_general_electricity_consumption = self.charge_battery(charge_solar, charge_load, discharge_size, current_solar, current_general_electricity_consumption)
 
-        # TODO integrate solar
-        residual_battery_energy = self.battery.use_battery(charge_action)
+        self.battery.use_battery(-discharge_size)
 
+        # discharge battery
         residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = self.service_electricity_load(
-            residual_battery_energy, current_controlled_load_consumption, current_general_electricity_consumption)
+            input_energy, current_controlled_load_consumption, current_general_electricity_consumption)
 
-        self.battery.current_charge += residual_battery_energy
+        self.battery.use_battery(residual_battery_energy)
 
+        # Service rest of the load with tariff
         cost = self.electricity_cost(
             residual_general_electricity_consumption, residual_controlled_load_consumption)
         reward = -cost
@@ -122,10 +124,20 @@ class HouseSystem:
 
         return observations, reward, done
 
-    def service_electricity_load(self, remaining_battery_energy, current_controlled_load_consumption, current_general_electricity_consumption):
+    def charge_battery(self, charge_solar, charge_load, discharge_size, current_solar, current_general_electricity_consumption):
+        residual_battery_solar = self.battery.use_battery(charge_solar)
+        current_solar -= (charge_solar - residual_battery_solar)
+
+        residual_battery_load = self.battery.use_battery(charge_load)
+        current_general_electricity_consumption += (charge_load - residual_battery_load)
+
+        input_energy = residual_battery_solar + residual_battery_load + current_solar + discharge_size
+        return input_energy, current_general_electricity_consumption
+
+    def service_electricity_load(self, battery_discharge_size, current_controlled_load_consumption, current_general_electricity_consumption):
         residual_controlled_load_consumption = current_controlled_load_consumption
         residual_general_electricity_consumption = current_general_electricity_consumption
-        residual_battery_energy = remaining_battery_energy
+        residual_battery_energy = battery_discharge_size
 
         if residual_battery_energy > 0:
             if current_controlled_load_consumption > 0:
