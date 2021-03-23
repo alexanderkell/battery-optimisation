@@ -15,6 +15,8 @@ class Battery:
         elif energy < 0:
             residual = self.discharge(energy)
             return residual
+        else: 
+            return 0
 
     def charge(self, charge_size):
         if self.current_charge + charge_size < self.battery_size:
@@ -125,7 +127,7 @@ class HouseSystem:
             current_general_electricity_consumption
         ]
 
-        return observations, reward, done
+        return observations, reward, done, {}
 
     def charge_battery(self, charge_solar, charge_load, discharge_size, current_solar, current_general_electricity_consumption):
         residual_battery_solar = self.battery.use_battery(charge_solar)
