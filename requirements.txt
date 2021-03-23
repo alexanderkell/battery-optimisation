@@ -6,6 +6,7 @@ matplotlib
 pytest
 pytest-cov
 numpy >= 1.16.5
+tensorflow
 
 # external requirements
 click

@@ -184,3 +184,5 @@ def test_house_system_step(house_system_list):
     house_system = house_system_list[0]
     observations, reward, done = house_system.step(10, 20, 30)
     assert done is False
+
+# TODO: test step function

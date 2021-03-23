@@ -119,7 +119,10 @@ class HouseSystem:
             self.battery.battery_size,
             self.battery.current_charge,
             residual_general_electricity_consumption,
-            residual_controlled_load_consumption
+            residual_controlled_load_consumption,
+            current_solar,
+            current_controlled_load_consumption,
+            current_general_electricity_consumption
         ]
 
         return observations, reward, done
