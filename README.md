@@ -63,7 +63,7 @@ To visualise the training in real-time, it is possible to use tensorboard. To st
 > tensorboard --logdir=~/ray_results/
 ```
 
-You can then view the training by navigating to `http://localhost:6007/`
+You can then view the training by navigating to `http://localhost:6007/` in a browser.
 
 
 Important features?
