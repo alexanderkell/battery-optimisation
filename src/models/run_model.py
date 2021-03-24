@@ -43,8 +43,6 @@ class BatteryEnv(gym.Env):
         ]
 
     def reset(self):
-
-
         return self.start_obs
 
     def step(self, action):
