@@ -9,13 +9,14 @@ from ray.rllib.models import ModelCatalog
 from ray.tune import grid_search
 from gym.spaces import Box, Discrete, MultiDiscrete
 import numpy as np
+import math
 
 
 class BatteryEnv(gym.Env):
     def __init__(self, env_config):
 
-        action_space = Box(low=0, high=10000, shape=(3,), dtype=np.float32)
-        observation_space = Box(low=-10000, high=10000, shape=(7,), dtype=np.float32)
+        action_space = Box(low=0, high=5000, shape=(3,), dtype=np.float32)
+        observation_space = Box(low=-100000, high=100000, shape=(7,), dtype=np.float32)
 
         self.observation_space = observation_space
         self.action_space = action_space
@@ -60,6 +61,9 @@ class BatteryEnv(gym.Env):
         if isinstance(observations[2], np.ndarray):
             if observations[2].size == 0:
                 observations = self.start_obs
+
+        if math.isnan(reward):
+            reward = 0
         return observations, reward, done, info
 
 
@@ -73,7 +77,7 @@ config = {
 }
 
 stop = {
-    "training_iteration": 1000,
+    # "training_iteration": 1000,
 }
 
 results = tune.run("DDPG", config=config, stop=stop)

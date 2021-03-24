@@ -115,7 +115,7 @@ class HouseSystem:
             residual_general_electricity_consumption, residual_controlled_load_consumption)
         reward = -cost
         done = True if self.datetime == datetime(
-            2013, 12, 6, 23, 30) else False
+            2012, 1, 15, 23, 0) else False
 
         observations = [
             self.battery.battery_size,
