@@ -42,7 +42,7 @@ Installation of packages
 Next, to install the required python packages, run:
 
 ```bash
-> pip install -r requirements.txt
+> pip install -r requirements.in
 ```
 
 Usage
@@ -54,6 +54,16 @@ To run the reinforcement learning algorithm, you must run a single file, such as
 > python3 src/models/run_model.py   
 ```
 
+Training
+--------
+
+To visualise the training in real-time, it is possible to use tensorboard. To start tensorboard, you must find your `ray_results/` folder. This is usually in `~/ray_results/`. The following code should work to get tensorboard started:
+
+```bash
+> tensorboard --logdir=~/ray_results/
+```
+
+You can then view the training by navigating to `http://localhost:6007/`
 
 
 Important features?
