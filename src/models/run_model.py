@@ -1,11 +1,9 @@
-import gym, ray
-from ray.rllib.agents import ddpg
+import gym
 from pathlib import Path
-from src.models.battery_model import HouseSystem, HouseSystemFactory
+from src.models.battery_model import HouseSystemFactory
 import pandas as pd
 from ray import tune
 import ray
-from ray.rllib.models import ModelCatalog
 from ray.tune import grid_search
 from gym.spaces import Box, Discrete, MultiDiscrete
 import numpy as np
@@ -68,7 +66,6 @@ class BatteryEnv(gym.Env):
 
 
 ray.init()
-# ModelCatalog.register_custom_model("battery_env")
         
 config = {
     "env": BatteryEnv, 
@@ -81,7 +78,3 @@ stop = {
 }
 
 results = tune.run("DDPG", config=config, stop=stop)
-
-# if args.as_test:
-#     check_learning_achieved(results, args.stop_reward)
-# ray.shutdown()
