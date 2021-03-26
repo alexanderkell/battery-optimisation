@@ -34,8 +34,11 @@ def house_system_list():
     from src.models.battery_model import HouseSystemFactory
 
     project_dir = Path(__file__).resolve().parents[1]
-    consumption_data_path = "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(
-        project_dir)
+    consumption_data_path = (
+        "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(
+            project_dir
+        )
+    )
 
     consumption_data = pd.read_csv(
         consumption_data_path,
@@ -59,89 +62,128 @@ def test_house_system_factory(house_system_list):
     assert house_system.generator_capacity == 1.00
     assert house_system.postcode == 2220
 
-    assert house_system.controlled_load_consumption[
-        'Consumption Category'].iloc[0] == 'controlled_load_consumption'
-    assert house_system.general_electricity_consumption[
-        'Consumption Category'].iloc[0] == 'general_electricity_consumption'
-    assert house_system.solar_generation['Consumption Category'].iloc[0] == 'solar_generation'
+    assert (
+        house_system.controlled_load_consumption["Consumption Category"].iloc[0]
+        == "controlled_load_consumption"
+    )
+    assert (
+        house_system.general_electricity_consumption["Consumption Category"].iloc[0]
+        == "general_electricity_consumption"
+    )
+    assert (
+        house_system.solar_generation["Consumption Category"].iloc[0]
+        == "solar_generation"
+    )
 
 
 def test_service_electricity_load(house_system_list):
     house_system = house_system_list[0]
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=10,
         current_controlled_load_consumption=20,
-        current_general_electricity_consumption=0
+        current_general_electricity_consumption=0,
     )
 
     assert residual_controlled_load_consumption == 10
-    assert residual_general_electricity_consumption == 0 
+    assert residual_general_electricity_consumption == 0
     assert residual_battery_energy == 0
 
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=10,
         current_controlled_load_consumption=0,
-        current_general_electricity_consumption=20
+        current_general_electricity_consumption=20,
     )
 
     assert residual_controlled_load_consumption == 0
     assert residual_general_electricity_consumption == 10
     assert residual_battery_energy == 0
 
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=10,
         current_controlled_load_consumption=5,
-        current_general_electricity_consumption=0
+        current_general_electricity_consumption=0,
     )
 
     assert residual_controlled_load_consumption == 0
     assert residual_general_electricity_consumption == 0
     assert residual_battery_energy == 5
 
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=10,
         current_controlled_load_consumption=0,
-        current_general_electricity_consumption=5
+        current_general_electricity_consumption=5,
     )
 
     assert residual_controlled_load_consumption == 0
     assert residual_general_electricity_consumption == 0
     assert residual_battery_energy == 5
 
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=40,
         current_controlled_load_consumption=10,
-        current_general_electricity_consumption=5
+        current_general_electricity_consumption=5,
     )
 
     assert residual_controlled_load_consumption == 0
     assert residual_general_electricity_consumption == 0
     assert residual_battery_energy == 25
 
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=40,
         current_controlled_load_consumption=55,
-        current_general_electricity_consumption=0
+        current_general_electricity_consumption=0,
     )
 
     assert residual_controlled_load_consumption == 15
     assert residual_general_electricity_consumption == 0
     assert residual_battery_energy == 0
 
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=40,
         current_controlled_load_consumption=0,
-        current_general_electricity_consumption=55
+        current_general_electricity_consumption=55,
     )
 
     assert residual_controlled_load_consumption == 0
     assert residual_general_electricity_consumption == 15
     assert residual_battery_energy == 0
 
-    residual_general_electricity_consumption, residual_controlled_load_consumption, residual_battery_energy = house_system.service_electricity_load(
+    (
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        residual_battery_energy,
+    ) = house_system.service_electricity_load(
         battery_discharge_size=40,
         current_controlled_load_consumption=30,
-        current_general_electricity_consumption=30
+        current_general_electricity_consumption=30,
     )
 
     assert residual_controlled_load_consumption == 0
@@ -156,7 +198,7 @@ def test_charge_battery_in_house(house_system_list):
         charge_load=30,
         discharge_size=10,
         current_solar=200,
-        current_general_electricity_consumption=300
+        current_general_electricity_consumption=300,
     )
 
     assert input_energy == 190
@@ -166,27 +208,52 @@ def test_charge_battery_in_house(house_system_list):
 def test_electricity_cost(house_system_list):
     house_system = house_system_list[0]
     step_cost = house_system.electricity_cost(
-        general_electricity_consumption=1,
-        controlled_load_consumption=1
+        general_electricity_consumption=1, controlled_load_consumption=1
     )
 
-    assert step_cost == 37
+    assert step_cost == 0.37
 
     step_cost = house_system.electricity_cost(
-        general_electricity_consumption=10,
-        controlled_load_consumption=10
+        general_electricity_consumption=10, controlled_load_consumption=10
     )
 
-    assert step_cost == 370
+    assert step_cost == 3.70
 
 
 # TODO: test step function
 def test_house_system_step(house_system_list):
     house_system = house_system_list[0]
     observations, reward, done, info = house_system.step(10, 20, 30)
-    
-    battery_size, current_charge, residual_general_electricity_consumption, residual_controlled_load_consumption, current_solar, current_controlled_load_consumption, current_general_electricity_consumption = observations
+
+    (
+        battery_size,
+        current_charge,
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        current_solar,
+        current_controlled_load_consumption,
+        current_general_electricity_consumption,
+    ) = observations
     assert battery_size == 5000
+    assert current_charge == 0
     assert current_solar == 0
     assert current_controlled_load_consumption == 1.238
+    # TODO: add tets for: residual_general_electricity_consumption, residual_controlled_load_consumption
+    assert done is False
+
+    observations, reward, done, info = house_system.step(20, 20, 30)
+
+    (
+        battery_size,
+        current_charge,
+        residual_general_electricity_consumption,
+        residual_controlled_load_consumption,
+        current_solar,
+        current_controlled_load_consumption,
+        current_general_electricity_consumption,
+    ) = observations
+    assert battery_size == 5000
+    assert current_charge == 10
+    assert current_solar == 0
+    assert current_controlled_load_consumption == 1.256
     assert done is False
