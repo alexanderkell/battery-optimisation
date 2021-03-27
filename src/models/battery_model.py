@@ -111,16 +111,26 @@ class HouseSystem:
         self.time_step = timedelta(minutes=30)
 
     def step(self, charge_solar, charge_load, discharge_size):
-        self.datetime += self.time_step
-        current_solar = self.solar_generation[
-            self.solar_generation.datetime == str(self.datetime)
-        ].consumption.values
-        current_controlled_load_consumption = self.controlled_load_consumption[
-            self.controlled_load_consumption.datetime == str(self.datetime)
-        ].consumption.values
-        current_general_electricity_consumption = self.general_electricity_consumption[
-            self.general_electricity_consumption.datetime == str(self.datetime)
-        ].consumption.values
+
+        current_solar = (
+            self.solar_generation[self.solar_generation.datetime == str(self.datetime)]
+            .iloc[0]
+            .consumption
+        )
+        current_controlled_load_consumption = (
+            self.controlled_load_consumption[
+                self.controlled_load_consumption.datetime == str(self.datetime)
+            ]
+            .iloc[0]
+            .consumption
+        )
+        current_general_electricity_consumption = (
+            self.general_electricity_consumption[
+                self.general_electricity_consumption.datetime == str(self.datetime)
+            ]
+            .iloc[0]
+            .consumption
+        )
 
         # charge battery with solar or load
         input_energy, current_general_electricity_consumption = self.charge_battery(
@@ -150,7 +160,11 @@ class HouseSystem:
             residual_controlled_load_consumption,
         )
         reward = -cost
-        done = True if self.datetime == datetime(2012, 1, 15, 23, 0) else False
+
+        if str(self.datetime) > "2012-01-12 23:00:00":
+            done = True
+        else:
+            done = False
 
         observations = [
             self.battery.battery_size,
@@ -161,7 +175,7 @@ class HouseSystem:
             current_controlled_load_consumption,
             current_general_electricity_consumption,
         ]
-
+        self.datetime += self.time_step
         return observations, reward, done, {}
 
     def charge_battery(
