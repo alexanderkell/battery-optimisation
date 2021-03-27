@@ -110,6 +110,9 @@ class HouseSystem:
 
         self.time_step = timedelta(minutes=30)
 
+        self.step_number = 0
+        self.run_data = {}
+
     def step(self, charge_solar, charge_load, discharge_size):
 
         current_solar = (
@@ -131,6 +134,16 @@ class HouseSystem:
             .iloc[0]
             .consumption
         )
+
+        self.run_data[self.step_number] = {
+            "datetime": self.datetime,
+            "charge_solar": charge_solar,
+            "charge_load": charge_load,
+            "discharge_size": discharge_size,
+            "current_solar": current_solar,
+            "current_controlled_load_consumption": current_controlled_load_consumption,
+            "current_general_electricity_consumption": current_general_electricity_consumption,
+        }
 
         # charge battery with solar or load
         input_energy, current_general_electricity_consumption = self.charge_battery(
@@ -175,7 +188,15 @@ class HouseSystem:
             current_controlled_load_consumption,
             current_general_electricity_consumption,
         ]
+
+        self.run_data[self.step_number].update(
+            {
+                "current_charge": self.battery.current_charge,
+            }
+        )
+
         self.datetime += self.time_step
+        self.step_number += 1
         return observations, reward, done, {}
 
     def charge_battery(

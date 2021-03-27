@@ -8,16 +8,24 @@ from ray.tune import grid_search
 from gym.spaces import Box, Discrete, MultiDiscrete
 import numpy as np
 import math
-from ray.tune import grid_search
+import time
 
 
 class BatteryEnv(gym.Env):
     def __init__(self, env_config):
-        print("env_config: {}".format(env_config))
         self.battery_size = env_config["battery_size"]
         self.setup_environment(self.battery_size)
 
     def reset(self):
+
+        df = pd.DataFrame.from_dict(self.house_system.run_data, "index")
+        project_dir = Path(__file__).resolve().parents[2]
+        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
+        results_path = "{}/data/results/run_data_battery_{}_time_{}.csv".format(
+            project_dir, self.battery_size, timestr
+        )
+        df.to_csv(results_path)
+
         self.setup_environment(self.battery_size)
         return self.start_obs
 
@@ -68,7 +76,8 @@ config = {
     "env": BatteryEnv,
     "lr": grid_search([1e-2]),  # try different lrs
     "num_workers": 4,  # parallelism
-    "env_config": {"battery_size": grid_search([3, 5, 10, 15])},
+    # "env_config": {"battery_size": grid_search([3, 5, 10, 15])},
+    "env_config": {"battery_size": grid_search([5])},
 }
 
 stop = {
