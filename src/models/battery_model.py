@@ -146,12 +146,12 @@ class HouseSystem:
         }
 
         # charge battery with solar or load
-        input_energy, current_general_electricity_consumption = self.charge_battery(
+        input_energy, current_controlled_load_consumption = self.charge_battery(
             charge_solar,
             charge_load,
             discharge_size,
             current_solar,
-            current_general_electricity_consumption,
+            current_controlled_load_consumption,
         )
 
         # Service load using energy after charging battery
@@ -205,7 +205,7 @@ class HouseSystem:
         charge_load,
         discharge_size,
         current_solar,
-        current_general_electricity_consumption,
+        current_controlled_load_consumption,
     ):
         if charge_solar < current_solar:
             residual_battery_solar = self.battery.use_battery(charge_solar)
@@ -215,7 +215,7 @@ class HouseSystem:
             remaining_solar = 0
 
         residual_battery_load = self.battery.use_battery(charge_load)
-        current_general_electricity_consumption += charge_load - residual_battery_load
+        current_controlled_load_consumption += charge_load - residual_battery_load
 
         input_energy = (
             residual_battery_solar
@@ -227,7 +227,7 @@ class HouseSystem:
         # Discharge battery
         self.battery.use_battery(-discharge_size)
 
-        return input_energy, current_general_electricity_consumption
+        return input_energy, current_controlled_load_consumption
 
     def service_electricity_load(
         self,

@@ -214,16 +214,16 @@ def test_service_electricity_load(house_system_list):
 
 def test_charge_battery_in_house(house_system_list):
     house_system = house_system_list[0]
-    input_energy, current_general_electricity_consumption = house_system.charge_battery(
+    input_energy, current_controlled_load_consumption = house_system.charge_battery(
         charge_solar=1,
         charge_load=1,
         discharge_size=1,
         current_solar=2,
-        current_general_electricity_consumption=2,
+        current_controlled_load_consumption=2,
     )
 
     assert input_energy == 2
-    assert current_general_electricity_consumption == 3
+    assert current_controlled_load_consumption == 3
     assert house_system.battery.current_charge == 1
 
 
@@ -260,46 +260,8 @@ def test_house_system_step_normal_battery(house_system_list_normal_size):
     assert battery_size == 13
     assert current_charge == 0
     assert current_solar == 0
-    assert current_controlled_load_consumption == 1.238
-    assert current_general_electricity_consumption == 1.299
+    # assert current_controlled_load_consumption == 1.238
+    # assert current_general_electricity_consumption == 1.299
     assert done is False
-    assert residual_general_electricity_consumption == 1.299
+    # assert residual_general_electricity_consumption == 1.299
     # assert reward == -
-
-
-# def test_house_system_step_big_battery(house_system_list):
-#     house_system = house_system_list[0]
-#     observations, reward, done, info = house_system.step(10, 20, 30)
-
-#     (
-#         battery_size,
-#         current_charge,
-#         residual_general_electricity_consumption,
-#         residual_controlled_load_consumption,
-#         current_solar,
-#         current_controlled_load_consumption,
-#         current_general_electricity_consumption,
-#     ) = observations
-#     assert battery_size == 5000
-#     assert current_charge == 0
-#     assert current_solar == 0
-#     assert current_controlled_load_consumption == 1.238
-#     assert done is False
-
-#     observations, reward, done, info = house_system.step(20, 20, 30)
-
-#     (
-#         battery_size,
-#         current_charge,
-#         residual_general_electricity_consumption,
-#         residual_controlled_load_consumption,
-#         current_solar,
-#         current_controlled_load_consumption,
-#         current_general_electricity_consumption,
-#     ) = observations
-#     assert battery_size == 5000
-#     assert current_charge == 10
-#     assert current_solar == 0
-#     # TODO: add tets for: residual_general_electricity_consumption, residual_controlled_load_consumption
-#     assert current_controlled_load_consumption == 1.256
-#     assert done is False

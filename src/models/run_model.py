@@ -74,15 +74,18 @@ ray.init()
 config = {
     "env": BatteryEnv,
     "lr": grid_search([1e-2]),  # try different lrs
-    "num_workers": 7,  # parallelism
+    "num_workers": 1,  # parallelism
     # "env_config": {"battery_size": grid_search([3, 5, 10, 15])},
     "env_config": {
-        "battery_size": grid_search([0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0])
+        # "battery_size": grid_search(
+        # [0.0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
+        # )
+        "battery_size": 1,
     },
 }
 
 stop = {
-    "training_iteration": 75000,
+    "training_iteration": 50,
 }
 
 results = tune.run("DDPG", config=config, stop=stop)
