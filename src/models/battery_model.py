@@ -49,7 +49,11 @@ class HouseSystemFactory:
         self.battery_size = battery_size
 
     def create_house_system(
-        self, input, single_rate_tariff=0.27, controlled_load_tariff=0.10
+        self,
+        input,
+        single_rate_tariff=0.27,
+        controlled_load_tariff=0.10,
+        end_date="2012-01-12 23:00:00",
     ):
         if isinstance(input, pd.DataFrame):
 
@@ -77,6 +81,7 @@ class HouseSystemFactory:
                     general_electricity_consumption,
                     single_rate_tariff,
                     controlled_load_tariff,
+                    end_date,
                 )
                 house_system_list.append(house_system)
             return house_system_list
@@ -95,6 +100,7 @@ class HouseSystem:
         general_electricity_consumption,
         single_rate_tariff=27,
         controlled_load_tariff=10,
+        end_date="2012-01-12 23:00:00",
     ):
         self.battery_size = battery_size
         self.battery = Battery(battery_size)
@@ -107,6 +113,7 @@ class HouseSystem:
         self.single_rate_tariff = single_rate_tariff
         self.controlled_load_tariff = controlled_load_tariff
         self.datetime = datetime(2012, 1, 8, 0, 30)
+        self.end_date = end_date
 
         self.time_step = timedelta(minutes=30)
 
@@ -114,6 +121,10 @@ class HouseSystem:
         self.run_data = {}
 
     def step(self, charge_solar, charge_load, discharge_size):
+        while self.solar_generation[
+            self.solar_generation.datetime == str(self.datetime)
+        ].empty:
+            self.datetime += self.time_step
 
         current_solar = (
             self.solar_generation[self.solar_generation.datetime == str(self.datetime)]
@@ -174,7 +185,7 @@ class HouseSystem:
         )
         reward = -cost
 
-        if str(self.datetime) > "2012-01-12 23:00:00":
+        if str(self.datetime) > self.end_date:
             done = True
         else:
             done = False

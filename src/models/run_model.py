@@ -55,7 +55,9 @@ class BatteryEnv(gym.Env):
         )
 
         factory = HouseSystemFactory(battery_size=battery_size)
-        house_system_list = factory.create_house_system(consumption_data)
+        house_system_list = factory.create_house_system(
+            consumption_data, end_date="2013-02-07"
+        )
         self.house_system = house_system_list[0]
 
         self.start_obs = [

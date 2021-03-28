@@ -13,7 +13,7 @@ library(lubridate)
 
 
 ```{r}
-results = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/results/run_data_battery_1_time_2021-03-28-09-29-12.csv")
+results = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/results/run_data_battery_1_time_2021-03-28-10-15-15.csv")
 
 results$datetime = ymd_hms(results$datetime)
 
@@ -25,14 +25,14 @@ results_long = pivot_longer(results, !c(datetime,X1))
 results_long
 ```
 ```{r}
-ggplot(data=filter(results_long, datetime<"2012-01-10"), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()
+ggplot(data=filter(results_long, datetime<"2012-01-09"), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()
 
 ```
 
 ```{r}
 filtered_results_long = results_long %>% filter(name == c("current_charge","current_controlled_load_consumption","current_general_electricity_consumption",'current_solar'))
 
-ggplot(data=filter(filtered_results_long, datetime<"2012-01-10"), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()
+ggplot(data=filter(filtered_results_long, datetime<"2012-01-09"), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()
 ```
 
 
