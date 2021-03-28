@@ -122,10 +122,6 @@ class HouseSystem:
 
     def step(self, charge_solar, charge_load, discharge_size):
         print(self.datetime)
-        while self.solar_generation[
-            self.solar_generation.datetime == str(self.datetime)
-        ].empty:
-            self.datetime += self.time_step
 
         current_solar = (
             self.solar_generation[self.solar_generation.datetime == str(self.datetime)]
