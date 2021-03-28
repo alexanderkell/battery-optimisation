@@ -50,15 +50,19 @@ class HouseSystemFactory:
 
     def create_house_system(
         self,
-        input,
+        input_data,
         single_rate_tariff=0.27,
         controlled_load_tariff=0.10,
         end_date="2012-01-12 23:00:00",
     ):
-        if isinstance(input, pd.DataFrame):
+        if isinstance(input_data, pd.DataFrame):
 
             house_system_list = []
-            for (customer_number, generator_capacity, postcode), data in input.groupby(
+            for (
+                customer_number,
+                generator_capacity,
+                postcode,
+            ), data in input_data.groupby(
                 ["Customer", "Generator Capacity", "Postcode"]
             ):
                 solar_generation = data[
@@ -71,6 +75,9 @@ class HouseSystemFactory:
                     data["Consumption Category"] == "general_electricity_consumption"
                 ]
 
+                earliest_date = str(input_data.datetime.min())
+                latest_date = str(input_data.datetime.max())
+
                 house_system = HouseSystem(
                     self.battery_size,
                     customer_number,
@@ -81,7 +88,8 @@ class HouseSystemFactory:
                     general_electricity_consumption,
                     single_rate_tariff,
                     controlled_load_tariff,
-                    end_date,
+                    start_date=earliest_date,
+                    end_date=latest_date,
                 )
                 house_system_list.append(house_system)
             return house_system_list
@@ -100,6 +108,7 @@ class HouseSystem:
         general_electricity_consumption,
         single_rate_tariff=27,
         controlled_load_tariff=10,
+        start_date="2012-01-08 00:30:00",
         end_date="2012-01-12 23:00:00",
     ):
         self.battery_size = battery_size
@@ -112,7 +121,7 @@ class HouseSystem:
         self.general_electricity_consumption = general_electricity_consumption
         self.single_rate_tariff = single_rate_tariff
         self.controlled_load_tariff = controlled_load_tariff
-        self.datetime = datetime(2012, 1, 8, 0, 30)
+        self.datetime = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
         self.end_date = end_date
 
         self.time_step = timedelta(minutes=30)
