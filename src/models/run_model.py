@@ -44,10 +44,14 @@ class BatteryEnv(gym.Env):
         self.action_space = action_space
 
         project_dir = Path(__file__).resolve().parents[2]
-        consumption_data_path = (
-            "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(
-                project_dir
-            )
+        # consumption_data_path = (
+        #     "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(
+        #         project_dir
+        #     )
+        # )
+
+        consumption_data_path = "{}/data/interim/full_week_long_data.csv".format(
+            project_dir
         )
 
         consumption_data = pd.read_csv(
@@ -56,7 +60,7 @@ class BatteryEnv(gym.Env):
 
         factory = HouseSystemFactory(battery_size=battery_size)
         house_system_list = factory.create_house_system(
-            consumption_data, end_date="2013-02-07"
+            consumption_data, end_date="2014-01-01"
         )
         self.house_system = house_system_list[0]
 
