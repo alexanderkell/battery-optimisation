@@ -182,7 +182,6 @@ class HouseSystem:
 
         if self.datetime >= self.end_date:
             done = True
-            print("done: {}, datetime: {}".format(done, self.datetime))
         else:
             done = False
 
