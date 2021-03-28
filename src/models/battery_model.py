@@ -121,6 +121,7 @@ class HouseSystem:
         self.run_data = {}
 
     def step(self, charge_solar, charge_load, discharge_size):
+        print(self.datetime)
         while self.solar_generation[
             self.solar_generation.datetime == str(self.datetime)
         ].empty:

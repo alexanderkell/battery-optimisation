@@ -50,7 +50,7 @@ class BatteryEnv(gym.Env):
         #     )
         # )
 
-        consumption_data_path = "{}/data/interim/full_week_long_data.csv".format(
+        consumption_data_path = "{}/data/processed/train_full_weeks.csv".format(
             project_dir
         )
 
