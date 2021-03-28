@@ -5,9 +5,7 @@ import pandas as pd
 from ray import tune
 import ray
 from ray.tune import grid_search
-from gym.spaces import Box, Discrete, MultiDiscrete
 import numpy as np
-import math
 import time
 
 
@@ -32,7 +30,6 @@ class BatteryEnv(gym.Env):
         observations, reward, done, info = self.house_system.step(
             action[0], action[1], action[2]
         )
-
         return observations, reward, done, info
 
     def setup_environment(self, battery_size):
@@ -44,11 +41,6 @@ class BatteryEnv(gym.Env):
         self.action_space = action_space
 
         project_dir = Path(__file__).resolve().parents[2]
-        # consumption_data_path = (
-        #     "{}/data/processed/lagged_2012-2013-solar-electricity-data.csv".format(
-        #         project_dir
-        #     )
-        # )
 
         consumption_data_path = "{}/data/processed/train_full_weeks.csv".format(
             project_dir

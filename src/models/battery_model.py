@@ -67,13 +67,13 @@ class HouseSystemFactory:
             ):
                 solar_generation = data[
                     data["Consumption Category"] == "solar_generation"
-                ]
+                ].sort_values("datetime")
                 controlled_load_consumption = data[
                     data["Consumption Category"] == "controlled_load_consumption"
-                ]
+                ].sort_values("datetime")
                 general_electricity_consumption = data[
                     data["Consumption Category"] == "general_electricity_consumption"
-                ]
+                ].sort_values("datetime")
 
                 earliest_date = str(input_data.datetime.min())
                 latest_date = str(input_data.datetime.max())
@@ -122,7 +122,7 @@ class HouseSystem:
         self.single_rate_tariff = single_rate_tariff
         self.controlled_load_tariff = controlled_load_tariff
         self.datetime = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
-        self.end_date = end_date
+        self.end_date = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
 
         self.time_step = timedelta(minutes=30)
 
@@ -130,26 +130,17 @@ class HouseSystem:
         self.run_data = {}
 
     def step(self, charge_solar, charge_load, discharge_size):
-        print(self.datetime)
 
-        current_solar = (
-            self.solar_generation[self.solar_generation.datetime == str(self.datetime)]
-            .iloc[0]
-            .consumption
+        self.datetime = datetime.strptime(
+            self.solar_generation.iloc[self.step_number].datetime, "%Y-%m-%d %H:%M:%S"
         )
-        current_controlled_load_consumption = (
-            self.controlled_load_consumption[
-                self.controlled_load_consumption.datetime == str(self.datetime)
-            ]
-            .iloc[0]
-            .consumption
-        )
+
+        current_solar = self.solar_generation.iloc[self.step_number].consumption
+        current_controlled_load_consumption = self.controlled_load_consumption.iloc[
+            self.step_number
+        ].consumption
         current_general_electricity_consumption = (
-            self.general_electricity_consumption[
-                self.general_electricity_consumption.datetime == str(self.datetime)
-            ]
-            .iloc[0]
-            .consumption
+            self.general_electricity_consumption.iloc[self.step_number].consumption
         )
 
         self.run_data[self.step_number] = {
@@ -191,7 +182,7 @@ class HouseSystem:
         )
         reward = -cost
 
-        if str(self.datetime) > self.end_date:
+        if self.datetime >= self.end_date:
             done = True
         else:
             done = False
@@ -212,7 +203,7 @@ class HouseSystem:
             }
         )
 
-        self.datetime += self.time_step
+        # self.datetime += self.time_step
         self.step_number += 1
         return observations, reward, done, {}
 
