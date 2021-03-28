@@ -5,6 +5,7 @@ import pandas as pd
 from ray import tune
 import ray
 from ray.tune import grid_search
+from gym.spaces import Box, Discrete, MultiDiscrete
 import numpy as np
 import time
 
@@ -30,6 +31,7 @@ class BatteryEnv(gym.Env):
         observations, reward, done, info = self.house_system.step(
             action[0], action[1], action[2]
         )
+
         return observations, reward, done, info
 
     def setup_environment(self, battery_size):
@@ -72,7 +74,8 @@ ray.init()
 config = {
     "env": BatteryEnv,
     "lr": grid_search([1e-2]),  # try different lrs
-    "num_workers": 1,  # parallelism
+    "num_workers": 1,  # parallelism,
+    "timesteps_per_iteration": 2500,
     # "env_config": {"battery_size": grid_search([3, 5, 10, 15])},
     "env_config": {
         # "battery_size": grid_search(

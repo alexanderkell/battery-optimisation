@@ -124,8 +124,6 @@ class HouseSystem:
         self.datetime = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
         self.end_date = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
 
-        self.time_step = timedelta(minutes=30)
-
         self.step_number = 0
         self.run_data = {}
 
@@ -184,6 +182,7 @@ class HouseSystem:
 
         if self.datetime >= self.end_date:
             done = True
+            print("done: {}, datetime: {}".format(done, self.datetime))
         else:
             done = False
 
