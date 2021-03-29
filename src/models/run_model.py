@@ -14,23 +14,30 @@ class BatteryEnv(gym.Env):
     def __init__(self, env_config):
         self.battery_size = env_config["battery_size"]
         self.setup_environment(self.battery_size)
+        self.rewards = []
 
     def reset(self):
         results = pd.DataFrame.from_dict(self.house_system.run_data, "index")
         project_dir = Path(__file__).resolve().parents[2]
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-        results_path = "{}/data/results/run_data_battery_{}_time_{}.csv".format(
-            project_dir, self.battery_size, timestr
+        results_path = (
+            "{}/data/results/results_29-03-2021/run_data_battery_{}_time_{}.csv".format(
+                project_dir, self.battery_size, timestr
+            )
         )
+
+        results["reward"] = self.rewards
         results.to_csv(results_path)
 
         self.setup_environment(self.battery_size)
+        self.rewards.clear()
         return self.start_obs
 
     def step(self, action):
         observations, reward, done, info = self.house_system.step(
             action[0], action[1], action[2]
         )
+        self.rewards.append(reward)
 
         return observations, reward, done, info
 
