@@ -78,15 +78,13 @@ config = {
     "timesteps_per_iteration": 2500,
     # "env_config": {"battery_size": grid_search([3, 5, 10, 15])},
     "env_config": {
-        # "battery_size": grid_search(
-        # [0.0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
-        # )
-        "battery_size": 1,
+        "battery_size": grid_search([0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0])
+        # "battery_size": 1,
     },
 }
 
 stop = {
-    "training_iteration": 50,
+    "training_iteration": 30,
 }
 
 results = tune.run("DDPG", config=config, stop=stop)
