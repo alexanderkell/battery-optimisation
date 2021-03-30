@@ -13,7 +13,8 @@ import time
 class BatteryEnv(gym.Env):
     def __init__(self, env_config):
         self.battery_size = env_config["battery_size"]
-        self.setup_environment(self.battery_size)
+        self.consumption_data = env_config["consumption_data"]
+        self.setup_environment(self.battery_size, self.consumption_data)
         self.rewards = []
 
     def reset(self):
@@ -29,7 +30,7 @@ class BatteryEnv(gym.Env):
         results["reward"] = self.rewards
         results.to_csv(results_path)
 
-        self.setup_environment(self.battery_size)
+        self.setup_environment(self.battery_size, self.consumption_data)
         self.rewards.clear()
         return self.start_obs
 
@@ -44,7 +45,7 @@ class BatteryEnv(gym.Env):
     def render(self):
         pass
 
-    def setup_environment(self, battery_size):
+    def setup_environment(self, battery_size, consumption_data):
 
         action_space = Box(low=0, high=battery_size, shape=(3,), dtype=np.float32)
         observation_space = Box(low=-1000, high=1000, shape=(7,), dtype=np.float32)
@@ -54,9 +55,7 @@ class BatteryEnv(gym.Env):
 
         project_dir = Path(__file__).resolve().parents[2]
 
-        consumption_data_path = "{}/data/processed/train_full_weeks.csv".format(
-            project_dir
-        )
+        consumption_data_path = "{}{}".format(project_dir, consumption_data)
 
         consumption_data = pd.read_csv(
             consumption_data_path,
@@ -92,7 +91,8 @@ if __name__ == "__main__":
         "env_config": {
             "battery_size": grid_search(
                 [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
-            )
+            ),
+            "consumption_data": "/data/processed/train_full_weeks.csv"
             # "battery_size": 1,
         },
     }

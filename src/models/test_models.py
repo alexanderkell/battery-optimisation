@@ -1,10 +1,11 @@
 # from src.models.rollout import run
-import subprocess
+from subprocess import Popen, PIPE
 from pathlib import Path
+import pickle
 
 
 def call_rollout(directory, battery_size):
-    subprocess.call(
+    p = Popen(
         [
             "/Users/alexanderkell/anaconda3/envs/battery-optimisation/bin/python",
             "src/models/rollout.py",
@@ -17,14 +18,20 @@ def call_rollout(directory, battery_size):
             "2",
             "--no-render",
             "--config",
-            '{"env_config":{"battery_size": ' + str(battery_size) + "}}",
-        ]
+            '{"env_config":{"battery_size": '
+            + str(battery_size)
+            + ', "consumption_data":"/data/processed/train_full_weeks.csv"}}',
+        ],
+        stdout=PIPE,
     )
+    output = p.stdout.read()
+
+    return output
 
 
 if __name__ == "__main__":
 
-    # call_rollout("1.4")
+    rewards = {"battery_size": [], "reward": [], "directory": []}
     p = Path(
         "/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models"
     )
@@ -38,4 +45,14 @@ if __name__ == "__main__":
     ]
 
     for directory, battery_size in zip(subdirectories, battery_sizes):
-        call_rollout(directory, battery_size)
+        reward = call_rollout(directory, battery_size)
+        rewards["battery_size"].append(battery_size)
+        rewards["directory"].append(directory)
+        rewards["reward"].append(reward)
+
+    print("rewards: {}".format(rewards))
+    with open(
+        "/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/results/testing/rewards.pickle",
+        "wb",
+    ) as handle:
+        pickle.dump(rewards, handle, protocol=pickle.HIGHEST_PROTOCOL)
