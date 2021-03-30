@@ -21,7 +21,7 @@ class BatteryEnv(gym.Env):
         project_dir = Path(__file__).resolve().parents[2]
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
         results_path = (
-            "{}/data/results/results_29-03-2021/run_data_battery_{}_time_{}.csv".format(
+            "{}/data/results/results_30-03-2021/run_data_battery_{}_time_{}.csv".format(
                 project_dir, self.battery_size, timestr
             )
         )
@@ -40,6 +40,9 @@ class BatteryEnv(gym.Env):
         self.rewards.append(reward)
 
         return observations, reward, done, info
+
+    def render(self):
+        pass
 
     def setup_environment(self, battery_size):
 
@@ -76,22 +79,26 @@ class BatteryEnv(gym.Env):
         ]
 
 
-ray.init()
+if __name__ == "__main__":
 
-config = {
-    "env": BatteryEnv,
-    "lr": grid_search([1e-2]),  # try different lrs
-    "num_workers": 1,  # parallelism,
-    "timesteps_per_iteration": 2500,
-    # "env_config": {"battery_size": grid_search([3, 5, 10, 15])},
-    "env_config": {
-        "battery_size": grid_search([0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0])
-        # "battery_size": 1,
-    },
-}
+    ray.init()
 
-stop = {
-    "training_iteration": 30,
-}
+    config = {
+        "env": BatteryEnv,
+        "lr": grid_search([1e-2]),  # try different lrs
+        "num_workers": 1,  # parallelism,
+        "timesteps_per_iteration": 2500,
+        # "env_config": {"battery_size": grid_search([3, 5, 10, 15])},
+        "env_config": {
+            "battery_size": grid_search(
+                [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
+            )
+            # "battery_size": 1,
+        },
+    }
 
-results = tune.run("DDPG", config=config, stop=stop)
+    stop = {
+        "training_iteration": 30,
+    }
+
+    results = tune.run("DDPG", config=config, stop=stop, checkpoint_freq=1)
