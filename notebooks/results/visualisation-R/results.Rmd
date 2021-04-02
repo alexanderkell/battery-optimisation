@@ -1,0 +1,46 @@
+---
+title: "results"
+author: "alex kell"
+date: "31/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+
+```{r cars}
+training = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/results/training/training_results.csv")
+```
+
+```{r}
+head(training)
+```
+
+```{r}
+
+training$`Battery size` = training$battery_size
+
+ggplot(data=training, aes(x=training_iteration, y=episode_reward_mean, color=`Battery size`, group=`Battery size`)) + geom_line() + theme_classic()+theme(text = element_text(size=18))  + xlab("Total training iterations") + ylab("Mean episode reward")+ scale_fill_continuous(guide = guide_legend()) +
+    theme(legend.position="bottom")
+
+ggsave("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/reports/figures/rewards_over_time.pdf", dpi=1000)
+```
+
+
+```{r}
+hyperparam = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/interim/hyperparameter_training.csv")
+
+
+ggplot(data=filter(hyperparam, training_iteration==30), aes(x=lr, y=episode_reward_mean, color=actor_hiddens)) + geom_point() + geom_smooth(method="lm") + theme_bw() + xlab("Learning rate") + ylab("Mean episode reward") + theme_classic() +theme(text = element_text(size=18)) + scale_fill_continuous(guide = guide_legend()) +
+    theme(legend.position="bottom")
+
+
+
+
+ggsave("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/reports/figures/hyperparameter_plot.pdf", dpi=1000)
+
+
+
+  ```

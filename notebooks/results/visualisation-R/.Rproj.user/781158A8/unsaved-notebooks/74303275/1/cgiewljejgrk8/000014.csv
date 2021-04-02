@@ -1,3 +1,0 @@
-"0","filtered_results_long = results_long %>% filter(name == c(""discharge_size"",""charge_load"",""charge_solar"",'current_solar', ""current_charge"", ""current_controlled_load_consumption""))"
-"0",""
-"0","ggplot(data=filter(filtered_results_long, datetime>""2012-01-09"", datetime <""2012-01-11""), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()"

@@ -147,3 +147,5 @@ cython_debug/
 
 /data/models
 .Rproj.user
+
+data/processed/all_results.csv

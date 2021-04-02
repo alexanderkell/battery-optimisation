@@ -1,2 +1,0 @@
-"0","results_long = pivot_longer(results, !c(datetime,X1))"
-"0","results_long"

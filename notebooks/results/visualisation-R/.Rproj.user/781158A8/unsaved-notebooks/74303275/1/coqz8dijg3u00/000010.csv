@@ -1,2 +1,0 @@
-"0","ggplot(data=filter(results_long, datetime<""2013-01-16""), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()"
-"0",""
