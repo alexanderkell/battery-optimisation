@@ -25,12 +25,12 @@ class BatteryEnv(gym.Env):
         results = pd.DataFrame.from_dict(self.house_system.run_data, "index")
         project_dir = Path(__file__).resolve().parents[2]
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-        results_path = "{}/data/results/results_30-03-2021/PPO/run_data_battery_{}_time_{}.csv".format(
+        results_path = "{}/data/results/results_31-03-2021/DDPG_hyperparameter_tune/run_data_battery_{}_time_{}.csv".format(
             project_dir, self.battery_size, timestr
         )
 
         results["reward"] = self.rewards
-        results.to_csv(results_path)
+        # results.to_csv(results_path)
 
         self.setup_environment(self.battery_size, self.consumption_data)
         self.rewards.clear()
@@ -86,22 +86,28 @@ if __name__ == "__main__":
 
     config = {
         "env": BatteryEnv,
-        "lr": grid_search([1e-2]),  # try different lrs
+        "lr": tune.uniform(1e-7, 1e-1),  # try different lrs
+        "actor_hiddens": tune.grid_search([[200, 200], [300, 300], [400, 400]]),
+        "critic_hiddens": tune.grid_search(
+            [[200, 200], [300, 300], [400, 400], [500, 500]]
+        ),
         "num_workers": 1,  # parallelism,
         "timesteps_per_iteration": 2500,
         "env_config": {
-            "battery_size": grid_search(
-                [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
-            ),
+            # "battery_size": grid_search(
+            # [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
+            # ),
             "consumption_data": "/data/processed/train_full_weeks.csv",
-            # "battery_size": 1,
+            "battery_size": 1,
         },
     }
 
     stop = {
-        "training_iteration": 300,
+        "training_iteration": 30,
     }
 
     # results = tune.run("DDPG", config=config, stop=stop, checkpoint_freq=1)
-    results = tune.run(["PPO"], config=config, stop=stop, checkpoint_freq=1)
-    # results = tune.run(["A2C"], config=config, stop=stop, checkpoint_freq=1)
+    # results = tune.run(["PPO"], config=config, stop=stop, checkpoint_freq=1)
+    results = tune.run(
+        "DDPG", config=config, stop=stop, checkpoint_freq=1, num_samples=4
+    )
