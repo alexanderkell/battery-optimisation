@@ -220,8 +220,13 @@ class HouseSystem:
             residual_battery_solar = self.battery.use_battery(current_solar)
             remaining_solar = 0
 
-        residual_battery_load = self.battery.use_battery(charge_load)
-        current_controlled_load_consumption += charge_load - residual_battery_load
+        hour = self.datetime.strftime("%H:%M")
+        if "10:00" < hour < "7:30":
+            # print(hour)
+            residual_battery_load = self.battery.use_battery(charge_load)
+            current_controlled_load_consumption += charge_load - residual_battery_load
+        else:
+            residual_battery_load = 0
 
         input_energy = (
             residual_battery_solar

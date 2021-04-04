@@ -86,19 +86,19 @@ if __name__ == "__main__":
 
     config = {
         "env": BatteryEnv,
-        "lr": tune.uniform(1e-7, 1e-1),  # try different lrs
-        "actor_hiddens": tune.grid_search([[200, 200], [300, 300], [400, 400]]),
-        "critic_hiddens": tune.grid_search(
-            [[200, 200], [300, 300], [400, 400], [500, 500]]
-        ),
+        # "lr": tune.uniform(1e-7, 1e-1),  # try different lrs
+        # "actor_hiddens": tune.grid_search([[200, 200], [300, 300], [400, 400]]),
+        # "critic_hiddens": tune.grid_search(
+        #     [[200, 200], [300, 300], [400, 400], [500, 500]]
+        # ),
         "num_workers": 1,  # parallelism,
         "timesteps_per_iteration": 2500,
         "env_config": {
-            # "battery_size": grid_search(
-            # [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
-            # ),
+            "battery_size": grid_search(
+                [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2.0]
+            ),
             "consumption_data": "/data/processed/train_full_weeks.csv",
-            "battery_size": 1,
+            # "battery_size": 1,
         },
     }
 
@@ -109,5 +109,5 @@ if __name__ == "__main__":
     # results = tune.run("DDPG", config=config, stop=stop, checkpoint_freq=1)
     # results = tune.run(["PPO"], config=config, stop=stop, checkpoint_freq=1)
     results = tune.run(
-        "DDPG", config=config, stop=stop, checkpoint_freq=1, num_samples=4
+        "DDPG", config=config, stop=stop, checkpoint_freq=1, num_samples=1
     )
