@@ -1,0 +1,115 @@
+---
+title: "visualising_results"
+author: "alex kell"
+date: "27/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+
+```{r}
+results = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/results/results_28-03-2021/run_data_battery_1_time_2021-03-28-17-15-03.csv")
+
+results$datetime = ymd_hms(results$datetime)
+
+head(results)
+```
+
+```{r}
+results = results %>% rename(`Solar Charge` = charge_solar, `Electricty Charge` = charge_load, Discharge = discharge_size, `Solar Power` = current_solar, `Controlled Electricity Demand` = current_controlled_load_consumption, `General Electricity Demand` = current_general_electricity_consumption, `Battery Charge Level` = current_charge)
+
+
+```
+
+```{r}
+results_long = pivot_longer(results, !c(datetime,X1))
+results_long
+```
+```{r}
+ggplot(data=filter(results_long, datetime<"2013-01-16"), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()
+
+```
+
+```{r}
+filtered_results_long = results_long %>% filter(name == c("Battery Charge Level", "Solar Power", "General Electricity Demand", "Controlled Electricity Demand"))
+
+
+filtered_results_long$Type = filtered_results_long$name
+
+ggplot(data=filter(filtered_results_long, datetime<"2013-01-15"), aes(x=datetime, y=value, color=Type)) + geom_line(size = 1) + theme_classic() + xlab("Date and time") + ylab("Value (kWh)")+ guides(colour = guide_legend(nrow = 2))  + theme(legend.position="bottom", text = element_text(size=17))
+
+ggsave("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/reports/figures/day_plot.pdf", dpi=1000)
+
+
+```
+
+
+
+```{r}
+filtered_results_long = results_long %>% filter(name == c("discharge_size","charge_load","charge_solar",'current_solar', "current_charge", "current_controlled_load_consumption"))
+
+ggplot(data=filter(filtered_results_long, datetime>"2012-01-09", datetime <"2012-01-11"), aes(x=datetime, y=value, color=name)) + geom_line() + theme_bw()
+```
+
+
+```{r}
+all_results = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/processed/all_results.csv")
+head(all_results)
+```
+
+```{r}
+unique(all_results$variable)
+```
+
+```{r}
+statistics = all_results %>% group_by(time, variable, battery_size) %>% summarize(sd = sd(value), mean = mean(value), mean_reward=mean(reward_mean), quantile = quantile(value, probs=0.5))
+statistics
+```
+```{r}
+statistics_main = filter(statistics, variable %in% c("Battery Charge Level", "Solar Power", "General Electricity Demand", "Controlled Electricity Demand"))
+
+statistics_main$Variable = statistics_main$variable
+```
+
+```{r}
+ggplot(data=filter(statistics_main, battery_size==1, mean_reward>-0.05)) + geom_line(aes(x=time, y=mean, color=Variable, group=Variable), size=1) + geom_ribbon(aes(x=time, ymin=mean-sd, ymax=mean+sd, fill=Variable), alpha=0.1)  + theme_classic()+ guides(colour = guide_legend(nrow = 2)) + xlab("Time of day") + ylab("Value") + theme_classic() +theme(text = element_text(size=18))+ theme(aspect.ratio = 1, legend.position="bottom", text = element_text(size=16)) 
+
+
+ggsave("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/reports/figures/best_controller_plot.pdf", dpi=1000)
+```
+
+
+```{r}
+testing_rewards = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/reports/figures/testing_rewards.csv")
+
+head(testing_rewards)
+```
+
+```{r}
+testing_rewards = testing_rewards %>% mutate(reward_rounded = round(reward))
+```
+
+```{r}
+ggplot(data=testing_rewards, aes(x=battery_size, y=reward)) + geom_bar(stat="identity", fill="lightblue") +geom_smooth(se=FALSE, color="orange") + geom_point() + theme_classic() + geom_text(aes(label=reward_rounded), vjust=1.95, color="black", size=3.5) + ylab("Mean episode reward") + xlab("Battery size (kWh)") + theme(text = element_text(size=18)) 
+
+ggsave("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/reports/figures/testing_barchat.pdf", dpi=1000)
+```
+
+```{r}
+hyperparam_training = read_csv("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/interim/hyperparameter_training_all_data.csv")
+
+hyperparam_training
+```
+
+```{r}
+hyperparam_training$`Learning rate` = hyperparam_training$lr
+
+ggplot(data=hyperparam_training)+geom_line(aes(x=training_iteration, y=episode_reward_mean, color=`Learning rate`, group=`Learning rate`),alpha=0.25, size=1) +theme_classic() + theme(text = element_text(size=18)) +xlab("Training iteration") + ylab("Mean episode reward")+ theme(legend.position="bottom")+guides(colour=guide_colourbar(barwidth=20))
+
+ggsave("/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/reports/figures/hyperparameter_training_plot.pdf", dpi=1000)
+```

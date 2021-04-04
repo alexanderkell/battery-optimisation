@@ -1,0 +1,11 @@
+,battery_size,reward,directory
+0,1.4,-6.164763088034473,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00006_6_battery_size=1.4,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"
+1,1.8,-0.7910171171518718,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00008_8_battery_size=1.8,lr=0.01_2021-03-30_12-26-56/checkpoint_30/checkpoint-30"
+2,0.4,-106.84945624382316,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00001_1_battery_size=0.4,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"
+3,1.0,-12.315391627729484,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00004_4_battery_size=1,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"
+4,0.8,-36.88422987905242,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00003_3_battery_size=0.8,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"
+5,0.2,-134.1237483637055,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00000_0_battery_size=0.2,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"
+6,1.6,-1.1126438912521561,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00007_7_battery_size=1.6,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"
+7,0.6,-42.97032083394348,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00002_2_battery_size=0.6,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"
+8,2.0,-0.17817342504575853,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00009_9_battery_size=2.0,lr=0.01_2021-03-30_12-27-01/checkpoint_30/checkpoint-30"
+9,1.2,-10.629741671847809,"/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/DDPG_BatteryEnv_46521_00005_5_battery_size=1.2,lr=0.01_2021-03-30_10-35-33/checkpoint_30/checkpoint-30"

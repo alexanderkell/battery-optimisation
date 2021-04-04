@@ -1,3 +1,0 @@
-"0","results = results %>% rename(`Solar Charge` = charge_solar, `Electricty Charge` = charge_load, Discharge = discharge_size, `Solar Power` = current_solar, `Controlled Electricity Demand` = current_controlled_load_consumption, `General Electricity Demand` = current_general_electricity_consumption, `Battery Charge Level` = current_charge)"
-"0",""
-"0",""
