@@ -1,0 +1,18 @@
+{
+  "actor_hiddens": [
+    200,
+    200
+  ],
+  "critic_hiddens": [
+    200,
+    200
+  ],
+  "env": "<class '__main__.BatteryEnv'>",
+  "env_config": {
+    "battery_size": 1,
+    "consumption_data": "/data/processed/train_full_weeks.csv"
+  },
+  "lr": 0.0296500318323636,
+  "num_workers": 1,
+  "timesteps_per_iteration": 2500
+}

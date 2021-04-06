@@ -145,7 +145,6 @@ cython_debug/
 
 .DS_Store
 
-/data/models
 .Rproj.user
 
 data/processed/all_results.csv

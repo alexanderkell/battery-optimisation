@@ -1,0 +1,9 @@
+{
+  "env": "<class '__main__.BatteryEnv'>",
+  "env_config": {
+    "battery_size": 0.8,
+    "consumption_data": "/data/processed/train_full_weeks.csv"
+  },
+  "num_workers": 1,
+  "timesteps_per_iteration": 2500
+}
