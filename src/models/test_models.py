@@ -33,14 +33,14 @@ if __name__ == "__main__":
 
     rewards = {"battery_size": [], "reward": [], "directory": []}
     p = Path(
-        "/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models"
+        "/Users/alexanderkell/Documents/PhD/Projects/18-battery-optimisation/data/models/new"
     )
     subdirectories = [
         "{}/checkpoint_30/checkpoint-30".format(x) for x in p.iterdir() if x.is_dir()
     ]
 
     battery_sizes = [
-        directory.split("_battery_size=")[1].split(",")[0]
+        directory.split("_battery_size=")[1].split("_")[0]
         for directory in subdirectories
     ]
 

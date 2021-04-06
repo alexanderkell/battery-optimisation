@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 import pandas as pd
 
 
@@ -123,6 +123,7 @@ class HouseSystem:
         self.controlled_load_tariff = controlled_load_tariff
         self.datetime = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
         self.end_date = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
+        self.hour = self.datetime.strftime("%H:%M")
 
         self.step_number = 0
         self.run_data = {}
@@ -132,6 +133,7 @@ class HouseSystem:
         self.datetime = datetime.strptime(
             self.solar_generation.iloc[self.step_number].datetime, "%Y-%m-%d %H:%M:%S"
         )
+        self.hour = self.datetime.strftime("%H:%M")
 
         current_solar = self.solar_generation.iloc[self.step_number].consumption
         current_controlled_load_consumption = self.controlled_load_consumption.iloc[
@@ -220,9 +222,8 @@ class HouseSystem:
             residual_battery_solar = self.battery.use_battery(current_solar)
             remaining_solar = 0
 
-        hour = self.datetime.strftime("%H:%M")
-        if "10:00" < hour < "7:30":
-            # print(hour)
+        if self.datetime.time() >= time(23, 00) or self.datetime.time() <= time(8, 00):
+
             residual_battery_load = self.battery.use_battery(charge_load)
             current_controlled_load_consumption += charge_load - residual_battery_load
         else:
