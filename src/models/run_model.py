@@ -1,14 +1,13 @@
-import gym
-from pathlib import Path
-from src.models.battery_model import HouseSystemFactory
-import pandas as pd
 from ray import tune
 import ray
-from ray.tune import grid_search
-from gym.spaces import Box, Discrete, MultiDiscrete
+from gym.spaces import Box
+import gym
+from pathlib import Path
+import pandas as pd
 import numpy as np
 import time
 import inspect
+from src.models.battery_model import HouseSystemFactory
 
 
 class BatteryEnv(gym.Env):
@@ -50,7 +49,6 @@ class BatteryEnv(gym.Env):
         pass
 
     def setup_environment(self, battery_size, consumption_data):
-
         action_space = Box(low=0, high=battery_size, shape=(3,), dtype=np.float32)
         observation_space = Box(low=-1000, high=1000, shape=(7,), dtype=np.float32)
 
@@ -83,7 +81,6 @@ class BatteryEnv(gym.Env):
 
 
 if __name__ == "__main__":
-
     ray.init()
 
     config = {
