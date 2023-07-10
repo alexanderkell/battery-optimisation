@@ -1,4 +1,4 @@
-battery_optimisation
+Battery Optimisation
 ==============================
 
 This project looks at the optimisation of domestic batteries with domestic solar photovoltaics attached.
