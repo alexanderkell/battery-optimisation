@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/alexanderkell/battery-optimisation.svg?branch=main)](https://travis-ci.org/alexanderkell/battery-optimisation)
-
 battery_optimisation
 ==============================
 

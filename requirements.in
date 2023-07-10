@@ -6,7 +6,6 @@ astunparse==1.6.3
 async-timeout==3.0.1
 atari-py==0.2.6
 attrs==20.2.0
-autopep8 @ file:///tmp/build/80754af9/autopep8_1615918855173/work
 blessings==1.7
 Bottleneck==1.3.2
 cachetools==4.2.1
@@ -23,7 +22,6 @@ cycler==0.10.0
 dm-tree==0.1.5
 docopt==0.6.2
 filelock==3.0.12
-flake8 @ file:///tmp/build/80754af9/flake8_1615834841867/work
 flatbuffers==1.12
 future==0.18.2
 gast==0.3.3
@@ -43,15 +41,9 @@ importlib-metadata==2.0.0
 iniconfig==1.0.1
 jsonschema==3.2.0
 Keras-Preprocessing==1.1.2
-kiwisolver @ file:///opt/concourse/worker/volumes/live/1e6d28e8-da14-4365-7344-567a05db7efc/volume/kiwisolver_1612282399491/work
 lz4==3.1.3
 Markdown==3.3.4
-matplotlib @ file:///opt/concourse/worker/volumes/live/41e8cd50-031f-4dda-5787-dd3c4f4e0f08/volume/matplotlib-suite_1613407855571/work
 mccabe==0.6.1
-mkl-fft==1.3.0
-mkl-random==1.1.1
-mkl-service==2.3.0
-more-itertools @ file:///tmp/build/80754af9/more-itertools_1613676688952/work
 msgpack==1.0.2
 multidict==5.1.0
 numpy==1.19.2
@@ -74,8 +66,6 @@ py==1.9.0
 py-spy==0.3.4
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pycodestyle @ file:///home/ktietz/src/ci_mi/pycodestyle_1612807597675/work
-pyflakes @ file:///home/ktietz/src/ci_ipy2/pyflakes_1612551159640/work
 pyglet==1.5.0
 pyparsing==2.4.7
 pyrsistent==0.17.3
@@ -88,10 +78,8 @@ ray==1.2.0
 redis==3.5.3
 requests==2.25.1
 requests-oauthlib==1.3.0
-rope @ file:///tmp/build/80754af9/rope_1602264064449/work
 rsa==4.7.2
 scipy==1.5.2
-seaborn @ file:///tmp/build/80754af9/seaborn_1608578541026/work
 six==1.15.0
 tabulate==0.8.9
 tensorboard==2.4.1
@@ -101,8 +89,6 @@ tensorflow==2.4.1
 tensorflow-estimator==2.4.0
 termcolor==1.1.0
 toml==0.10.1
-tornado @ file:///opt/concourse/worker/volumes/live/d531d395-893c-4ca1-6a5f-717b318eb08c/volume/tornado_1606942307627/work
-typing-extensions @ file:///home/ktietz/src/ci_mi/typing_extensions_1612808209620/work
 urllib3==1.26.4
 Werkzeug==1.0.1
 wrapt==1.12.1
