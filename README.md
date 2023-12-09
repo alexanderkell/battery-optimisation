@@ -5,9 +5,15 @@ This project looks at the optimisation of domestic batteries with domestic solar
 
 The project's aim is to use reinforcement learning to optimally dispatch a battery source.
 
-Publications
-------------
+Publication
+===========
 Kell, A.J., Stephen McGough, A. and Forshaw, M. (2022) ‘Optimizing a domestic battery and solar photovoltaic system with Deep Reinforcement Learning’, 2022 IEEE International Conference on Big Data (Big Data) [Preprint]. [doi:10.1109/bigdata55660.2022.10021028](https://doi.org/10.1109/bigdata55660.2022.10021028).
+
+Abstract
+========
+![Best Controller Plot](reports/figures/best_controller_plot.pdf)
+![Optimal battery sizing](reports/figures/testing_barchat.pdf)
+
 
 
 Installation
