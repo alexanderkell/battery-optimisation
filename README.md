@@ -129,13 +129,13 @@ Repository Structure
 │   └── figures
 ├── requirements.in
 ├── requirements.txt
-├── src
+├── src <--------------------------------- Main source code folder
 │   ├── __init__.py
-│   ├── __pycache__
-│   ├── data
-│   └── models
+│   ├── __pycache__ 
+│   ├── data <----------------------------- Code to generate data
+│   └── models <--------------------------- Code for simulation, modelling, training and testing of algorithms
 └── test
     ├── __init__.py
-    └── test_model.py
+    └── test_model.py <------------------- Unit tests to ensure code is working as expected
 ```
 
