@@ -7,7 +7,8 @@ The project's aim is to use reinforcement learning to optimally dispatch a batte
 
 Publications
 ------------
-Kell, A.J., Stephen McGough, A. and Forshaw, M. (2022) ‘Optimizing a domestic battery and solar photovoltaic system with Deep Reinforcement Learning’, 2022 IEEE International Conference on Big Data (Big Data) [Preprint]. [doi:10.1109/bigdata55660.2022.10021028](doi:10.1109/bigdata55660.2022.10021028). 
+Kell, A.J., Stephen McGough, A. and Forshaw, M. (2022) ‘Optimizing a domestic battery and solar photovoltaic system with Deep Reinforcement Learning’, 2022 IEEE International Conference on Big Data (Big Data) [Preprint]. [doi:10.1109/bigdata55660.2022.10021028](https://doi.org/10.1109/bigdata55660.2022.10021028).
+
 
 Installation
 ============
