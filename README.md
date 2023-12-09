@@ -3,7 +3,12 @@ Battery Optimisation
 
 This project looks at the optimisation of domestic batteries with domestic solar photovoltaics attached.
 
-The project's aim is to use reinforcement learning to dispatch a battery source optimally.
+The project's aim is to use reinforcement learning to optimally dispatch a battery source.
+
+Publications
+------------
+- [Optimizing a domestic battery and solar photovoltaic system with deep reinforcement learning](https://ieeexplore.ieee.org/abstract/document/10021028)
+- [Open access version](https://arxiv.org/pdf/2109.05024.pdf)
 
 Installation
 ============
