@@ -106,6 +106,36 @@ Observations
 - Time
 - Day
 
+Repository Structure
+====================
 
+├── LICENSE 
+├── README.md
+├── data
+│   ├── interim
+│   ├── models
+│   ├── processed
+│   ├── raw
+│   └── results
+├── notebooks
+│   ├── data_munging
+│   ├── exploration
+│   ├── features
+│   ├── modelling
+│   └── results
+├── references
+│   └── Ausgrid solar home electricity data notes (Aug 2014).pdf
+├── reports
+│   └── figures
+├── requirements.in
+├── requirements.txt
+├── src
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── data
+│   └── models
+└── test
+    ├── __init__.py
+    └── test_model.py
 
 
