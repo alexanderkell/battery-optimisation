@@ -1,3 +1,5 @@
+[![Unit Tests](https://github.com/alexanderkell/battery-optimisation/actions/workflows/pytest.yaml/badge.svg)](https://github.com/alexanderkell/battery-optimisation/actions/workflows/pytest.yaml)
+
 Battery Optimisation
 ==============================
 
