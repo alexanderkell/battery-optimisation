@@ -11,6 +11,10 @@ Kell, A.J., Stephen McGough, A. and Forshaw, M. (2022) ‘Optimizing a domestic 
 
 Abstract
 ========
+This study introduces a state-of-the-art method for optimizing home battery and solar systems using deep reinforcement learning. It focuses on improving battery performance in solar-battery systems, significantly reducing household electricity costs. 
+
+The deep learning algorithm adapts to changing energy needs and solar outputs, enhancing energy management. The Figures below highlight the impact of different battery sizes and the algorithm's effectiveness. 
+
 <p float="left">
   <img src="/reports/figures/best_controller_plot.png" width="400" />
   <img src="/reports/figures/testing_barchat.png" width="400" /> 
