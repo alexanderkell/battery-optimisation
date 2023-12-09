@@ -11,8 +11,8 @@ Kell, A.J., Stephen McGough, A. and Forshaw, M. (2022) ‘Optimizing a domestic 
 
 Abstract
 ========
-![Best Controller Plot](https://github.com/alexanderkell/battery-optimisation/blob/cfe6ab60103542bc6c8b8ae2da6ad7ceb7fa81b5/reports/figures/best_controller_plot.pdf)
-![Optimal battery sizing](https://github.com/alexanderkell/battery-optimisation/blob/cfe6ab60103542bc6c8b8ae2da6ad7ceb7fa81b5/reports/figures/testing_barchat.pdf)
+![Best Controller Plot](reports/figures/best_controller_plot.png)
+![Optimal battery sizing](reports/figures/testing_barchat.png)
 
 
 
